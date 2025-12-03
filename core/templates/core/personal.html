@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personal Loans - Charleston Credit Union</title>
+  <link rel="stylesheet" href="{% static 'core/style.css' %}">
+
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">Charleston Credit Union</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="loan.html">Loans</a>
+      <a href="business.html">Business</a>
+      <a href="personal.html" class="active">Personal</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <section class="personal-hero">
+    <div class="personal-hero-content">
+      <h1>Personal Loans Made Simple</h1>
+      <p>Get the funds you need for life’s important moments — from travel to education and more.</p>
+      <a href="#apply" class="btn-primary">Apply Now</a>
+    </div>
+  </section>
+
+  <section class="personal-info">
+    <h2>Why Choose Our Personal Loans?</h2>
+    <div class="info-grid">
+      <div>
+        <h3>Fast Approval</h3>
+        <p>Apply online and get a decision quickly — no long wait or hidden conditions.</p>
+      </div>
+      <div>
+        <h3>Affordable Payments</h3>
+        <p>Flexible repayment plans that suit your budget and income schedule.</p>
+      </div>
+      <div>
+        <h3>No Collateral Needed</h3>
+        <p>Enjoy access to personal funds without the need for assets or guarantors.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="personal-image-text">
+    <div class="per-img">
+      <img src="https://images.pexels.com/photos/3778876/pexels-photo-3778876.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Happy family loan">
+    </div>
+    <div class="per-text">
+      <h2>Use Your Loan Your Way</h2>
+      <p>Whether you’re planning a family trip, paying tuition, or upgrading your home, our personal loans give you the freedom and flexibility you need.</p>
+      <ul>
+        <li>✔ Up to $50,000 available</li>
+        <li>✔ 6–36 month repayment terms</li>
+        <li>✔ Easy online application</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="personal-apply" id="apply">
+    <h2>Start Your Application Today</h2>
+    <p>Fill out this quick form and one of our financial experts will contact you shortly.</p>
+    <form class="apply-form">
+      <input type="text" placeholder="Full Name" required>
+      <input type="email" placeholder="Email Address" required>
+      <input type="number" placeholder="Desired Loan Amount" required>
+      <textarea placeholder="Purpose of Loan" rows="4"></textarea>
+      <button type="submit">Submit Application</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>© 2025 Charleston Credit Union. All rights reserved.</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{% block title %}Charleston Credit Union{% endblock %}</title>
+
+  <!-- Inter font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#f4f6fb;
+      --card:#fff;
+      --muted:#6b7280;
+      --primary:#0c1e46;
+      --accent:#0ea5a5;
+      --radius:12px;
+    }
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      background:linear-gradient(180deg,#f6f8fb 0%,var(--bg)100%);
+      color:var(--primary);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+    header{
+      background:var(--card);
+      padding:16px 24px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      box-shadow:0 2px 8px rgba(15,23,42,0.06);
+      position:sticky; top:0; z-index:20;
+    }
+    .brand{ font-weight:700; font-size:1.15rem; color:var(--primary) }
+    nav a{ margin-left:12px; text-decoration:none; color:var(--muted); font-weight:600; }
+    .container{ max-width:980px; margin:28px auto; padding:18px; }
+    .card{ background:var(--card); border-radius:calc(var(--radius)+4px); padding:22px; box-shadow:0 8px 24px rgba(12,30,70,0.06) }
+
+    /* small helpers */
+    .muted{ color:var(--muted); }
+    .btn{ background:var(--primary); color:#fff; padding:10px 14px; border-radius:10px; text-decoration:none; display:inline-block }
+    .btn.secondary{ background:transparent; color:var(--primary); border:1px solid #e6e9ef }
+    .status { padding:6px 10px; border-radius:8px; font-weight:600; display:inline-block; }
+    .status.pending { background:#fff7ed; color:#b45309; border:1px solid #fcd34d }
+    .status.successful { background:#ecfdf5; color:#047857; border:1px solid #6ee7b7 }
+    .status.failed { background:#fef2f2; color:#991b1b; border:1px solid #fca5a5 }
+
+    footer{ text-align:center; color:var(--muted); font-size:0.9rem; padding:36px 12px; }
+    @media (max-width:720px){
+      .container{ padding:12px }
+      header{ padding:12px }
+      nav a{ display:inline-block; margin-left:8px; font-size:0.95rem }
+    }
+  </style>
+
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  <header>
+    <div class="brand">Charleston Credit Union</div>
+    <nav>
+      <a href="{% url 'dashboard' %}">Dashboard</a>
+      <a href="{% url 'link_bank' %}">Link Bank</a>
+      <a href="{% url 'transfer' %}">Transfer</a>
+      <a href="{% url 'loan' %}">Loan</a>
+      {% if request.session.user_id %}
+        <a href="{% url 'logout' %}">Logout</a>
+      {% else %}
+        <a href="{% url 'login' %}">Login</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    © {% now "Y" %} Charleston Credit Union — built with care.
+  </footer>
+
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

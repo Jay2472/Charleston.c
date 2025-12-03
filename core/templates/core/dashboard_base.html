@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Dashboard - Charleston{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'core/css/dashboard.css' %}">
+</head>
+<body>
+    <header>
+        <h2>Charleston Bank Dashboard</h2>
+        <nav>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'transfer' %}">Transfer</a>
+            <a href="{% url 'link_bank' %}">Link Bank</a>
+            <a href="{% url 'loan' %}">Loan</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Charleston Bank — All rights reserved.</p>
+    </footer>
+</body>
+</html>

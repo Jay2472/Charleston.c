@@ -1,0 +1,8 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<div class="container text-center mt-5">
+    <h2 class="text-success fw-bold">🎉 Loan Application Submitted!</h2>
+    <p>Your loan request has been received. Our team will review it and notify you soon.</p>
+    <a href="{% url 'dashboard' %}" class="btn btn-primary mt-3">Back to Dashboard</a>
+</div>
+{% endblock %}

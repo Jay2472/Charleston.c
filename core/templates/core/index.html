@@ -1,0 +1,532 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Alton Community Bank — Modern Banking</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ====== root variables ====== */
+    :root{
+      --bg:#f6f8fb;
+      --accent:#0466c8;
+      --accent-2:#00aaff;
+      --muted:#6b7280;
+      --card:#ffffff;
+      --glass: rgba(255,255,255,0.6);
+      --radius:14px;
+      --shadow: 0 10px 30px rgba(12,34,66,0.08);
+      --glass-shadow: 0 6px 18px rgba(12,34,66,0.06);
+    }
+
+    /* ====== base ====== */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: "Poppins", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg, var(--bg), #eef4ff);
+      color:#102a43;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
+    }
+
+    a{color:var(--accent); text-decoration:none}
+    a:hover{opacity:0.9}
+
+    /* ====== NAVBAR ====== */
+    .nav {
+      position:fixed;
+      top:0; left:0; right:0;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:18px 32px;
+      z-index:1200;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(15,23,42,0.03);
+    }
+    .brand {
+      display:flex; gap:12px; align-items:center;
+    }
+    .brand img{width:44px;height:44px;object-fit:contain;border-radius:8px}
+    .brand h1{font-size:20px;margin:0;font-weight:700;color:#04293a}
+    .nav-links {
+      display:flex; gap:20px; align-items:center;
+    }
+    .nav-links a { font-weight:600; color:#04293a; padding:8px 10px; border-radius:8px; font-size:14px; }
+    .nav-links a:hover { background:rgba(4,102,200,0.06) }
+
+    .nav-actions { display:flex; gap:10px; align-items:center; }
+    .btn {
+      padding:9px 16px;
+      border-radius:12px;
+      border: none;
+      font-weight:600;
+      cursor:pointer;
+    }
+    .btn-outline { background:transparent; border:1px solid rgba(4,102,200,0.12); color:var(--accent) }
+    .btn-primary { background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:white; box-shadow:0 8px 22px rgba(4,102,200,0.12) }
+
+    /* hamburger for mobile */
+    .hamburger { display:none; cursor:pointer; width:44px; height:44px; align-items:center; justify-content:center; border-radius:10px; }
+    .hamburger div { width:22px; height:2px; background:#04293a; margin:4px 0; transition:0.2s }
+
+    /* ====== HERO ====== */
+    .hero {
+      height:92vh;
+      min-height:600px;
+      display:grid;
+      grid-template-columns:1fr 520px;
+      gap:48px;
+      align-items:center;
+      padding:120px 64px 48px;
+    }
+
+    .hero-left {
+      max-width:900px;
+    }
+
+    .eyebrow { display:inline-block; background:linear-gradient(90deg,#e6f0ff,#eefcff); color:var(--accent); padding:8px 12px; border-radius:999px; font-weight:600; margin-bottom:18px; font-size:13px }
+    .hero-title { font-size:48px; line-height:1.02; margin:0 0 18px; font-weight:800; color:#04293a }
+    .hero-sub { color:var(--muted); font-size:18px; margin-bottom:22px; }
+
+    .hero-cta { display:flex; gap:12px; margin-top:18px; flex-wrap:wrap; }
+
+    /* hero right card (glass) with video thumb */
+    .hero-card {
+      background:linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.7));
+      border-radius:20px;
+      padding:18px;
+      box-shadow:var(--glass-shadow);
+      border:1px solid rgba(11,22,44,0.04);
+    }
+    .hero-card .media {
+      width:100%;
+      height:230px;
+      border-radius:12px;
+      overflow:hidden;
+      position:relative;
+      background:#000;
+    }
+    .hero-card video, .hero-card img { width:100%; height:100%; object-fit:cover; display:block }
+    .hero-card .meta { padding:12px 6px; display:flex; justify-content:space-between; align-items:center }
+    .meta .small { color:var(--muted); font-size:13px }
+
+    /* ====== GALLERY & FEATURES ====== */
+    .features {
+      padding:64px 6vw;
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:28px;
+      align-items:start;
+    }
+    .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px }
+    .card {
+      background:var(--card);
+      border-radius:14px;
+      padding:18px;
+      box-shadow:var(--shadow);
+      transition:transform .35s, box-shadow .35s;
+      border:1px solid rgba(10,20,40,0.03);
+    }
+    .card:hover { transform:translateY(-8px); box-shadow:0 18px 40px rgba(12,34,66,0.08) }
+    .card h3 { margin:8px 0 6px; font-size:18px }
+    .card p { color:var(--muted); margin:0 }
+
+    /* gallery tall images */
+    .gallery { display:grid; grid-template-columns:repeat(3,1fr); gap:12px }
+    .gallery img { width:100%; height:120px; object-fit:cover; border-radius:10px }
+
+    /* ====== testimonials & live comments ====== */
+    .social-section {
+      padding:48px 6vw;
+      display:flex;
+      gap:28px;
+      align-items:flex-start;
+      justify-content:space-between;
+    }
+    .testimonials {
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .testimonials .panel { background:var(--card); padding:18px; border-radius:12px; box-shadow:var(--shadow) }
+    .comment-feed {
+      width:380px;
+      max-height:420px;
+      overflow:auto;
+      background: linear-gradient(180deg,#fff, #fbfcff);
+      padding:12px;
+      border-radius:12px;
+      border:1px solid rgba(10,20,40,0.03);
+      box-shadow:var(--shadow);
+    }
+    .comment { display:flex; gap:12px; padding:10px; border-radius:8px; align-items:flex-start; }
+    .comment img { width:44px;height:44px;border-radius:999px; object-fit:cover; border:2px solid rgba(0,0,0,0.04) }
+    .comment .who { font-weight:700; font-size:14px }
+    .comment .what { color:var(--muted); font-size:14px; margin-top:4px }
+
+    /* ====== CTA wide ====== */
+    .cta-wide {
+      margin:48px 6vw;
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      padding:28px;
+      border-radius:18px;
+      color:white;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:24px;
+    }
+    .cta-wide h2{ margin:0; font-size:22px }
+    .cta-wide .cta-actions button { margin-left:12px }
+
+    /* ====== footer ====== */
+    footer {
+      padding:48px 6vw;
+      display:flex;
+      gap:30px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      color:#fff;
+      background:linear-gradient(180deg,#021428,#04293a);
+    }
+    footer a { color: rgba(255,255,255,0.9) }
+    .small { font-size:13px; color:rgba(255,255,255,0.8) }
+
+    /* ====== responsive ====== */
+    @media (max-width:1100px) {
+      .hero { grid-template-columns:1fr; padding:100px 24px 40px }
+      .features { grid-template-columns:1fr; padding:36px 24px }
+      .social-section { flex-direction:column }
+      .gallery { grid-template-columns:repeat(2,1fr) }
+      .nav-links { display:none }
+      .hamburger { display:flex }
+    }
+
+    @media (max-width:560px){
+      .hero-title { font-size:30px }
+      .brand h1 { font-size:18px }
+      .gallery img { height:100px }
+      .comment-feed { width:100% }
+      footer { padding:28px 18px; text-align:center }
+    }
+
+    /* subtle entrance */
+    .fade-in { opacity:0; transform:translateY(8px); transition:opacity .6s ease, transform .6s ease }
+    .fade-in.visible { opacity:1; transform:none }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <div class="nav">
+    <div class="brand">
+      <img src="https://images.pexels.com/photos/3183198/pexels-photo-3183198.jpeg?auto=compress&cs=tinysrgb&w=120&h=120&fit=crop" alt="Alton logo">
+      <h1>Alton Community Bank</h1>
+    </div>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="{% url 'home' %}">Home</a>
+      <a href="#features">Services</a>
+      <a href="#social">Social</a>
+      <a href="{% url 'open_account' %}">Open Account</a>
+      <a href="{% url 'login' %}">Login</a>
+      <a href="{% url 'deposit_pyusd' %}">Deposit</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="btn btn-outline" onclick="location.href='{% url 'login' %}'">Sign in</button>
+      <button class="btn btn-primary" onclick="location.href='{% url 'open_account' %}'">Get Started</button>
+      <div class="hamburger" id="hamburger" aria-label="Menu">
+        <div></div><div></div><div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-left">
+        <span class="eyebrow">Trusted · Community-first · Modern</span>
+        <h2 class="hero-title">Banking that understands you — <span style="color:var(--accent-2)">modern, fast, personal</span></h2>
+        <p class="hero-sub">Alton Community Bank blends the warmth of local banking with modern digital tools — open an account in minutes and move your money confidently.</p>
+
+        <div class="hero-cta">
+          <button class="btn btn-primary" onclick="location.href='{% url 'open_account' %}'">Open Account — It's free</button>
+          <button class="btn btn-outline" onclick="location.href='{% url 'deposit_pyusd' %}'">Deposit PYUSD</button>
+        </div>
+
+        <!-- quick stats -->
+        <div style="display:flex; gap:14px; margin-top:26px; flex-wrap:wrap">
+          <div style="background:#fff; padding:12px 16px; border-radius:12px; box-shadow:var(--glass-shadow)">
+            <div style="font-weight:700; font-size:18px">120K+</div>
+            <div style="color:var(--muted); font-size:13px">Active members</div>
+          </div>
+          <div style="background:#fff; padding:12px 16px; border-radius:12px; box-shadow:var(--glass-shadow)">
+            <div style="font-weight:700; font-size:18px">\$250M+</div>
+            <div style="color:var(--muted); font-size:13px">Managed assets</div>
+          </div>
+          <div style="background:#fff; padding:12px 16px; border-radius:12px; box-shadow:var(--glass-shadow)">
+            <div style="font-weight:700; font-size:18px">24/7</div>
+            <div style="color:var(--muted); font-size:13px">Digital access</div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="hero-card fade-in" id="heroCard">
+        <div class="media">
+          <!-- autoplaying muted video as hero media (hosted CDN) -->
+          <video autoplay muted loop playsinline>
+            <source src="https://cdn.coverr.co/videos/coverr-working-on-a-laptop-while-holding-a-credit-card-5668/1080p.mp4" type="video/mp4">
+            <img src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="finance">
+          </video>
+        </div>
+
+        <div class="meta">
+          <div>
+            <div style="font-weight:700">Instant transfers</div>
+            <div class="small">Send and receive worldwide</div>
+          </div>
+          <div style="text-align:right" class="small">Free for members</div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- FEATURES / GALLERY -->
+    <section class="features" id="features">
+      <div>
+        <h2 style="margin-top:0">What we offer</h2>
+        <p style="color:var(--muted)">Complete banking: savings, checking, instant lending tools, business accounts, and crypto-friendly deposits.</p>
+
+        <div class="cards" style="margin-top:20px">
+          <div class="card">
+            <img src="https://images.pexels.com/photos/3184312/pexels-photo-3184312.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="" style="width:100%; height:140px; object-fit:cover; border-radius:10px">
+            <h3>Smart Savings</h3>
+            <p>Automated rules to grow your funds with competitive rates and no hidden fees.</p>
+          </div>
+
+          <div class="card">
+            <img src="https://images.pexels.com/photos/3182818/pexels-photo-3182818.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="" style="width:100%; height:140px; object-fit:cover; border-radius:10px">
+            <h3>Business Tools</h3>
+            <p>Invoices, merchant services, and multi-user access for your company finances.</p>
+          </div>
+
+          <div class="card">
+            <img src="https://images.pexels.com/photos/3184631/pexels-photo-3184631.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="" style="width:100%; height:140px; object-fit:cover; border-radius:10px">
+            <h3>Flexible Loans</h3>
+            <p>Personal and small business loans with quick decisions and clear terms.</p>
+          </div>
+
+          <div class="card">
+            <img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="" style="width:100%; height:140px; object-fit:cover; border-radius:10px">
+            <h3>Secure Deposits</h3>
+            <p>Easy PYUSD deposit flow and manual admin approval — speed with safety.</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3 style="margin-top:0">Gallery</h3>
+        <div class="gallery">
+          <img src="https://images.pexels.com/photos/3184313/pexels-photo-3184313.jpeg?auto=compress&cs=tinysrgb&w=800" alt="">
+          <img src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?auto=compress&cs=tinysrgb&w=800" alt="">
+          <img src="https://images.pexels.com/photos/3184421/pexels-photo-3184421.jpeg?auto=compress&cs=tinysrgb&w=800" alt="">
+          <img src="https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800" alt="">
+          <img src="https://images.pexels.com/photos/3184213/pexels-photo-3184213.jpeg?auto=compress&cs=tinysrgb&w=800" alt="">
+          <img src="https://images.pexels.com/photos/3183100/pexels-photo-3183100.jpeg?auto=compress&cs=tinysrgb&w=800" alt="">
+        </div>
+      </div>
+    </section>
+
+    <!-- SOCIAL / TESTIMONIALS -->
+    <section id="social" class="social-section">
+      <div class="testimonials">
+        <h3 style="margin-top:0">Member Stories</h3>
+
+        <div class="panel">
+          <div id="testimonialBox" style="font-weight:700; font-size:16px; margin-bottom:8px">“Fast transfers and excellent customer service.”</div>
+          <div style="color:var(--muted); font-size:14px">— Ada, Small business owner</div>
+        </div>
+
+        <div class="panel" style="margin-top:12px">
+          <h4 style="margin:0 0 8px">Recent Media</h4>
+          <div style="display:flex; gap:12px">
+            <img src="https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=1600" style="width:120px;height:74px;object-fit:cover;border-radius:8px">
+            <img src="https://images.pexels.com/photos/3184290/pexels-photo-3184290.jpeg?auto=compress&cs=tinysrgb&w=1600" style="width:120px;height:74px;object-fit:cover;border-radius:8px">
+            <img src="https://images.pexels.com/photos/3184293/pexels-photo-3184293.jpeg?auto=compress&cs=tinysrgb&w=1600" style="width:120px;height:74px;object-fit:cover;border-radius:8px">
+          </div>
+        </div>
+
+        <div style="margin-top:14px; display:flex; gap:10px">
+          <button class="btn btn-outline" onclick="location.href='{% url 'open_account' %}'">Open account</button>
+          <button class="btn btn-primary" onclick="location.href='{% url 'deposit_pyusd' %}'">Make a deposit</button>
+        </div>
+      </div>
+
+      <aside class="comment-feed" aria-live="polite">
+        <h4 style="margin:0 0 8px">Live Member Comments</h4>
+        <div id="comments"></div>
+      </aside>
+    </section>
+
+    <!-- CTA WIDE -->
+    <section class="cta-wide">
+      <div>
+        <h2>Ready to bank locally with global tools?</h2>
+        <div class="small" style="margin-top:6px">Secure accounts, modern tools, and people-first service — join Alton Community Bank today.</div>
+      </div>
+      <div class="cta-actions">
+        <button class="btn btn-outline" onclick="location.href='{% url 'login' %}'">Sign in</button>
+        <button class="btn btn-primary" onclick="location.href='{% url 'open_account' %}'">Get started</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div style="max-width:420px">
+      <img src="https://images.pexels.com/photos/3183198/pexels-photo-3183198.jpeg?auto=compress&cs=tinysrgb&w=120&h=120&fit=crop" style="width:52px;border-radius:10px;margin-bottom:12px">
+      <div style="font-weight:700; color:#fff; font-size:18px">Alton Community Bank</div>
+      <div class="small" style="margin-top:8px">Local bank. Digital-first. Community-minded.</div>
+    </div>
+
+    <div style="display:flex; gap:36px; align-items:flex-start; flex-wrap:wrap">
+      <div>
+        <h4 style="color:#fff; margin-bottom:8px">Products</h4>
+        <a href="#">Accounts</a><br>
+        <a href="#">Loans</a><br>
+        <a href="#">Business Banking</a><br>
+        <a href="#">PYUSD Deposits</a>
+      </div>
+
+      <div>
+        <h4 style="color:#fff; margin-bottom:8px">Company</h4>
+        <a href="#">About</a><br>
+        <a href="#">Careers</a><br>
+        <a href="#">Press</a>
+      </div>
+
+      <div>
+        <h4 style="color:#fff; margin-bottom:8px">Support</h4>
+        <a href="#">Help center</a><br>
+        <a href="#">Contact</a><br>
+        <a href="#">Security</a>
+      </div>
+    </div>
+
+    <div style="width:100%; margin-top:18px; border-top:1px solid rgba(255,255,255,0.06); padding-top:18px; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap">
+      <div class="small">© 2025 Alton Community Bank · All rights reserved</div>
+      <div class="small">Made with ♥ for our community</div>
+    </div>
+  </footer>
+
+  <!-- ====== SCRIPTS: interactions, testimonials, live comments, mobile nav ====== -->
+  <script>
+    // Mobile nav toggle
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger && hamburger.addEventListener('click', () => {
+      if (navLinks.style.display === 'flex') {
+        navLinks.style.display = 'none';
+        hamburger.classList.remove('open');
+      } else {
+        navLinks.style.display = 'flex';
+        navLinks.style.flexDirection = 'column';
+        navLinks.style.background = 'white';
+        navLinks.style.padding = '12px';
+        navLinks.style.borderRadius = '10px';
+        navLinks.style.position = 'absolute';
+        navLinks.style.top = '70px';
+        navLinks.style.right = '20px';
+        navLinks.style.boxShadow = '0 8px 30px rgba(2,10,30,0.08)';
+        hamburger.classList.add('open');
+      }
+    });
+
+    // reveal animations on scroll (very light)
+    const faders = document.querySelectorAll('.fade-in');
+    const appearOptions = { threshold: 0.15, rootMargin: "0px 0px -100px 0px" };
+    const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll){
+      entries.forEach(entry=>{
+        if(!entry.isIntersecting) return;
+        entry.target.classList.add('visible');
+        appearOnScroll.unobserve(entry.target);
+      });
+    }, appearOptions);
+    faders.forEach(fader => { appearOnScroll.observe(fader); });
+
+    // rotating testimonials
+    const testimonials = [
+      "“Joining Alton Community Bank changed my financial life — their service is top-notch!”",
+      "“Fast transfers and helpful staff. I love the experience.”",
+      "“My small business grew thanks to their flexible loan plans!”",
+      "“Best online banking app I’ve used — simple and safe.”",
+      "“They treat you like family, not just a customer.”"
+    ];
+    let tIndex = 0;
+    const tBox = document.getElementById('testimonialBox');
+    setInterval(()=>{
+      tIndex = (tIndex + 1) % testimonials.length;
+      tBox.style.opacity = 0;
+      setTimeout(()=>{ tBox.textContent = testimonials[tIndex]; tBox.style.opacity = 1 }, 400);
+    }, 5000);
+
+    // live comments (simulated). If you later want to pull real comments via Ajax,
+    // replace this simulation with fetch() to your API endpoint.
+    const comments = [
+      {name:"Nkechi", avatar:"https://randomuser.me/api/portraits/women/65.jpg", text:"Paid my PYUSD deposit today — quick and easy!"},
+      {name:"Jide", avatar:"https://randomuser.me/api/portraits/men/43.jpg", text:"Loan approval was surprisingly fast."},
+      {name:"Amina", avatar:"https://randomuser.me/api/portraits/women/44.jpg", text:"Love the mobile features — balance updates instantly."},
+      {name:"Sam", avatar:"https://randomuser.me/api/portraits/men/53.jpg", text:"Customer support helped me set up my business account."},
+      {name:"Esther", avatar:"https://randomuser.me/api/portraits/women/68.jpg", text:"I recommend them to all my colleagues."}
+    ];
+
+    const commentsEl = document.getElementById('comments');
+
+    function pushComment(c){
+      const el = document.createElement('div');
+      el.className = 'comment';
+      el.innerHTML = `
+        <img src="${c.avatar}" alt="${c.name}">
+        <div>
+          <div class="who">${c.name} <span style="font-weight:500;color:var(--muted); font-size:12px"> · just now</span></div>
+          <div class="what">${c.text}</div>
+        </div>
+      `;
+      commentsEl.prepend(el);
+      // trim to 12 items
+      while(commentsEl.children.length > 12) commentsEl.removeChild(commentsEl.lastChild);
+    }
+
+    // seed initial list
+    comments.slice().reverse().forEach(c => pushComment(c));
+
+    // every 5s simulate a new comment (rotates)
+    setInterval(()=>{
+      const sample = comments[Math.floor(Math.random()*comments.length)];
+      pushComment(sample);
+    }, 5000);
+
+    // Smooth scroll for in-page anchors
+    document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
+      anchor.addEventListener('click', function(e){
+        e.preventDefault();
+        const tgt = document.querySelector(this.getAttribute('href'));
+        if(tgt) tgt.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    });
+
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,28 @@
+{% extends 'core/dashboard_base.html' %}
+{% block content %}
+<div class="p-6 max-w-2xl mx-auto bg-white rounded-2xl shadow-md mt-6">
+  <h2 class="text-2xl font-semibold mb-3 text-gray-800">Upfront Fee Payment</h2>
+
+  <p class="text-gray-600 mb-3">
+    Your loan amount: <strong>${{ loan_amount }}</strong><br>
+    20% upfront fee: <strong>${{ upfront_fee }}</strong>
+  </p>
+
+  <h3 class="font-semibold mt-4 mb-2">Payment Methods</h3>
+  <ul class="list-disc ml-5">
+    <li>PYUSD Coin (Crypto Wallet)</li>
+    <li>Bank Transfer (ACH)</li>
+  </ul>
+
+  <div class="mt-6 flex justify-center">
+    <button class="bg-green-600 text-white px-5 py-2 rounded hover:bg-green-700">
+      Proceed to Payment
+    </button>
+  </div>
+
+  <div class="mt-6 flex justify-center gap-4 text-gray-500 text-sm">
+    <span>🔒 SSL Secure</span>
+    <span>✅ Trusted Gateway</span>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Open an Account - Charleston Credit Union</title>
+  <link rel="stylesheet" href="{% static 'core/style.css' %}">
+
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo">Charleston Credit Union</div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="personal.html">Personal</a></li>
+        <li><a href="business.html">Business</a></li>
+        <li><a href="loan.html">Loans</a></li>
+        <li><a href="join.html" class="active">Join Now</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="Join-Now-hero">
+    <div class="Join-hero-content">
+      <h1>Open an Account with Charleston Credit Union</h1>
+      <p>Join our growing family of members and enjoy secure, reliable, and rewarding banking services.</p>
+    </div>
+  </section>
+
+  <section class="open-account-info">
+    <h2>Why Choose Us?</h2>
+    <div class="info-grid">
+      <div>
+        <h3>Secure Banking</h3>
+        <p>Your money and data are protected with top-tier encryption and advanced security systems.</p>
+      </div>
+      <div>
+        <h3>Fast Online Access</h3>
+        <p>Manage your accounts, check balances, and transfer funds — all from your phone or computer.</p>
+      </div>
+      <div>
+        <h3>Member Benefits</h3>
+        <p>Enjoy exclusive rewards, lower interest rates, and personalized customer service.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="account-types">
+    <h2>Choose an Account Type</h2>
+    <div class="types-grid">
+      <div class="type-card">
+        <h3>Personal Savings Account</h3>
+        <p>Perfect for everyday savings and future goals. Earn interest while keeping your money safe.</p>
+      </div>
+      <div class="type-card">
+        <h3>Checking Account</h3>
+        <p>Access your money anytime with a debit card and enjoy zero monthly maintenance fees.</p>
+      </div>
+      <div class="type-card">
+        <h3>Business Account</h3>
+        <p>Grow your business with tailored solutions, 24/7 banking, and professional support.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="open-account-form">
+    <h2>Fill Out the Form to Get Started</h2>
+    <form class="apply-form">
+      <input type="text" placeholder="Full Name" required />
+      <input type="email" placeholder="Email Address" required />
+      <input type="tel" placeholder="Phone Number" required />
+      <select required>
+        <option value="">Select Account Type</option>
+        <option value="savings">Personal Savings</option>
+        <option value="checking">Checking</option>
+        <option value="business">Business Account</option>
+      </select>
+      <textarea placeholder="Your Address" rows="3"></textarea>
+      <button type="submit" class="btn-primary">Open Account</button>
+    </form>
+  </section>
+
+  <footer>
+    <p class="footer-bottom">©️ 2025 Charleston Credit Union. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

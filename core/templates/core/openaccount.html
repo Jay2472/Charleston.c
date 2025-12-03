@@ -1,0 +1,132 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open an Account - Charleston Credit Union</title>
+  <link rel="stylesheet" href="{% static 'core/style.css' %}">
+  <style>
+    .messages {
+      width: 80%;
+      margin: 20px auto;
+      padding: 10px;
+      border-radius: 5px;
+      text-align: center;
+    }
+    .messages p {
+      padding: 10px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+    .messages .success {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    .messages .error {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+
+    /* Card preview (clean version) */
+    .card-preview {
+      width: 340px;
+      height: 200px;
+      background: linear-gradient(135deg, #003366, #0077b6);
+      color: white;
+      border-radius: 15px;
+      padding: 20px;
+      margin: 40px auto;
+      position: relative;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .bank-tagline {
+      font-size: 0.9em;
+      opacity: 0.8;
+    }
+
+    .card-number {
+      font-size: 1.2em;
+      letter-spacing: 2px;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9em;
+    }
+
+    .card-name {
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <!-- Messages -->
+  {% if messages %}
+  <div class="messages">
+    {% for message in messages %}
+      <p class="{{ message.tags }}">{{ message }}</p>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <header class="navbar">
+    <div class="logo">Charleston Credit Union</div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="#">Loans</a>
+      <a href="#">Business</a>
+      <a href="#">Personal</a>
+      <a href="{% url 'open_account' %}" class="active">Open Account</a>
+      <a href="{% url 'login' %}">Login</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <section class="open-account-hero">
+    <div class="open-hero-content">
+      <h1>Open an Account with Charleston Credit Union</h1>
+      <p>Join our growing family of members and enjoy secure, reliable, and rewarding banking services.</p>
+    </div>
+  </section>
+
+ 
+  <section class="open-account-form">
+    <h2>Fill Out the Form to Get Started</h2>
+    <form method="POST" class="apply-form">
+      {% csrf_token %}
+      <input type="text" name="fullname" placeholder="Full Name" required>
+      <input type="email" name="email" placeholder="Email Address" required>
+      <input type="password" name="password" placeholder="Password" required>
+
+      <select name="account_type" required>
+        <option value="">Select Account Type</option>
+        <option value="savings">Personal Savings</option>
+        <option value="checking">Checking</option>
+        <option value="business">Business Account</option>
+      </select>
+
+      <textarea name="address" placeholder="Your Address" rows="3"></textarea>
+
+      <button type="submit">Open Account</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>© 2025 Charleston Credit Union. All rights reserved.</p>
+  </footer>
+</body>
+</html>
+

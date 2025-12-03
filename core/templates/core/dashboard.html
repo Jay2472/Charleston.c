@@ -1,0 +1,303 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Charleston Credit Union | Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #0c1e46;
+      --accent: #00bcd4;
+      --gold: #ffcc00;
+      --bg: #f4f6fb;
+      --white: #fff;
+      --text-dark: #1c1e21;
+      --text-light: #6b7280;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    header {
+      background: var(--white);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 200;
+    }
+
+    .brand { font-size: 1.5rem; font-weight: 700; color: var(--primary); }
+    .menu-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--primary); display: none; }
+
+    nav { display: flex; align-items: center; }
+    nav a { color: var(--text-dark); margin-left: 1.5rem; text-decoration: none; font-weight: 500; transition: 0.3s; }
+    nav a:hover { color: var(--accent); }
+
+    .logout-btn {
+      background: var(--accent);
+      border: none;
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s;
+      margin-left: 1rem;
+    }
+    .logout-btn:hover { background: #0891b2; }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -260px;
+      width: 240px;
+      height: 100%;
+      background: var(--white);
+      box-shadow: 3px 0 20px rgba(0,0,0,0.1);
+      border-top-right-radius: 16px;
+      border-bottom-right-radius: 16px;
+      padding: 2rem 1.5rem;
+      transition: 0.4s ease;
+      z-index: 150;
+    }
+    .sidebar.active { left: 0; }
+    .sidebar h2 { font-size: 1.2rem; color: var(--primary); margin-bottom: 1.5rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem; }
+    .sidebar a { display: block; padding: 0.7rem 0.8rem; text-decoration: none; color: var(--text-dark); border-radius: 8px; margin-bottom: 0.5rem; transition: all 0.3s; }
+    .sidebar a:hover { background: var(--accent); color: white; padding-left: 1.2rem; }
+
+    .dashboard { padding: 2rem; transition: margin-left 0.4s ease; }
+    .dashboard.shift { margin-left: 250px; }
+
+    .balance-header {
+      display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem;
+    }
+
+    .card {
+      background: radial-gradient(circle at top left, #0f172a, #1e293b);
+      color: white;
+      padding: 2rem;
+      border-radius: 20px;
+      width: 400px;
+      height: 220px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      position: relative;
+      overflow: hidden;
+    }
+    .card .bank { font-size: 1.2rem; color: var(--gold); font-weight: 600; }
+    .card .number { margin-top: 40px; font-size: 1.4rem; letter-spacing: 3px; }
+    .card .footer {
+      position: absolute; bottom: 20px; left: 2rem; right: 2rem;
+      display: flex; justify-content: space-between;
+    }
+
+    .actions { display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap; }
+    .action {
+      flex: 1;
+      text-align: center;
+      background: var(--primary);
+      color: white;
+      padding: 1rem;
+      border-radius: 10px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: 0.3s;
+      position: relative;
+    }
+    .action:hover { background: var(--accent); transform: translateY(-3px); }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 105%;
+      left: 0;
+      background-color: var(--white);
+      min-width: 220px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      z-index: 10;
+    }
+    .dropdown-content a {
+      color: var(--text-dark);
+      padding: 0.8rem 1rem;
+      text-decoration: none;
+      display: block;
+      transition: background 0.3s;
+    }
+    .dropdown-content a:hover { background: var(--accent); color: white; }
+    .action.dropdown:hover .dropdown-content { display: block; }
+
+    .section {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      animation: fadeIn 1s ease;
+    }
+
+    .section h2 { margin-bottom: 1rem; color: var(--primary); }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px);} to { opacity: 1; transform: translateY(0);} }
+
+    /* New Fun Sections */
+    .live-sc {
+      background: linear-gradient(135deg, #e0f7fa, #ffffff);
+      border-left: 6px solid var(--accent);
+    }
+
+    .promo {
+      background: linear-gradient(120deg, #ffcc00, #fff8e1);
+      border-left: 6px solid #ffb300;
+    }
+
+    .motivation {
+      background: linear-gradient(120deg, #c3e5f3, #ffffff);
+      border-left: 6px solid #0ea5e9;
+      text-align: center;
+      font-style: italic;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 900px) {
+      .menu-btn { display: block; }
+      nav { display: none; }
+      .balance-header { flex-direction: column; gap: 1.5rem; }
+      .card { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">Charleston Credit Union</div>
+  <button class="menu-btn" onclick="toggleMenu()">☰</button>
+  <nav>
+    <a href="{% url 'dashboard' %}">Dashboard</a>
+    <a href="{% url 'transfer' %}">Transfer</a>
+    <a href="{% url 'deposit_pyusd' %}">Deposit</a>
+
+    <a href="{% url 'withdraw' %}">Withdraw</a>
+
+    <a href="{% url 'loan' %}">Loan</a>
+    <form action="{% url 'logout' %}" method="post" style="display:inline;">
+      {% csrf_token %}
+      <button type="submit" class="logout-btn">Logout</button>
+    </form>
+  </nav>
+</header>
+
+<div class="sidebar" id="sidebar">
+  <h2>Menu</h2>
+  <a href="{% url 'dashboard' %}">🏠 Overview</a>
+  <a href="{% url 'transfer' %}">💸 Transfer</a>
+ 
+  
+  <a href="{% url 'loan' %}">📄 Loan</a>
+  <form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+    <button type="submit" class="logout-btn" style="width:100%;margin-top:1rem;">Logout</button>
+  </form>
+</div>
+
+<div class="dashboard" id="dashboard">
+  <div class="balance-header">
+    <div>
+      <h3>Available Balance</h3>
+      <h1>${{ user.balance|default:"0.00" }}</h1>
+    </div>
+    <div class="card">
+      <div class="bank">Charleston Credit Union</div>
+      <div class="number">•••• •••• •••• 8745</div>
+      <div class="footer">
+        <div><small>Card Holder</small><br><strong>{{ user.fullname }}</strong></div>
+        <div><small>Expires</small><br><strong>09/30</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <a href="{% url 'transfer' %}" class="action">Send Money</a>
+    <div class="action dropdown">
+      Deposit
+      <div class="dropdown-content">
+        <a href="{% url 'link_bank' %}">💳 Deposit via Bank Transfer</a>
+        
+        <a href="{% url 'deposit_pyusd' %}">Deposit</a>
+
+
+      </div>
+    </div>
+    <a href="{% url 'withdraw' %}" class="action">Withdraw</a>
+  </div>
+
+  <div class="section">
+    <h2>📊 Account Overview</h2>
+    <p>Your Charleston Credit Union account gives you full control — manage funds, transfers, and track balances securely.</p>
+  </div>
+
+  <div class="section">
+    <h2>🧾 Recent Transactions</h2>
+    <p>No transactions yet. Once you send or receive money, they’ll show up here instantly.</p>
+  </div>
+
+  <div class="section tips">
+    <h2>💡 Financial Tips</h2>
+    <ul>
+      <li>Review your transaction history regularly.</li>
+      <li>Set up linked banks for faster deposits.</li>
+      <li>Keep your credentials private and secure.</li>
+      <li>Always log out when using public devices.</li>
+    </ul>
+  </div>
+
+  <!-- FUN SECTIONS -->
+  <div class="section live-sc">
+    <h2>🌆 Live in South Carolina</h2>
+    <p>Welcome to sunny Charleston! ☀️ Temperature: <strong>78°F</strong> — perfect for a coffee by the waterfront. Check out local events, beach runs, and market vibes this weekend!</p>
+  </div>
+
+  <div class="section promo">
+    <h2>💼 Charleston Credit Union Promo</h2>
+    <p>🎉 Get <strong>2% Cashback</strong> on all transactions made this month using your Charleston Card! Stay tuned for our new <em>Smart Savings Challenge</em> launching soon 🚀</p>
+  </div>
+
+  <div class="section motivation" id="motivation">
+    “The best investment you can make is in yourself.” – Warren Buffett
+  </div>
+</div>
+
+<script>
+  function toggleMenu() {
+    const sidebar = document.getElementById('sidebar');
+    const dashboard = document.getElementById('dashboard');
+    sidebar.classList.toggle('active');
+    dashboard.classList.toggle('shift');
+  }
+
+  const quotes = [
+    "“Your money should work for you while you sleep.”",
+    "“Financial freedom is a mindset.”",
+    "“The goal isn’t more money, it’s living life on your own terms.”",
+    "“Save before you spend — future you will thank you.”"
+  ];
+  let i = 0;
+  setInterval(() => {
+    document.getElementById('motivation').innerText = quotes[i];
+    i = (i + 1) % quotes.length;
+  }, 4000);
+</script>
+
+</body>
+</html>

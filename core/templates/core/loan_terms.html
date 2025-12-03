@@ -1,0 +1,22 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<div style="max-width:600px;margin:40px auto;background:#fff;padding:30px;border-radius:12px;box-shadow:0 4px 8px rgba(0,0,0,0.1);">
+  <h2 style="color:#0c1e46;text-align:center;">Loan Terms & Upfront Fee</h2>
+  <p style="margin-top:15px;line-height:1.6;">
+    To proceed with your loan, you’ll need to pay an upfront security fee of
+    <strong>20% of your approved loan amount</strong>.  
+    This confirms your commitment and ensures smooth processing.
+  </p>
+  <p style="margin-top:10px;line-height:1.6;">
+    After payment, upload your ID and face verification photo for final approval.
+    Once verified, your loan funds will be released to your linked account.
+  </p>
+  <p style="margin-top:15px;">If you agree, go back and check the box to continue your loan application.</p>
+
+  <div style="text-align:center;margin-top:20px;">
+    <a href="{% url 'loan' %}" style="background:#0c1e46;color:white;padding:10px 20px;border-radius:8px;text-decoration:none;">
+      Back to Loan Application
+    </a>
+  </div>
+</div>
+{% endblock %}

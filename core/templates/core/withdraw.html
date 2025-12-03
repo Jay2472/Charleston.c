@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Withdraw Funds</title>
+  <style>
+    body {
+      background: #f2f5f9;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .withdraw-container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 380px;
+    }
+
+    .withdraw-container h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #004aad;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: border 0.3s;
+    }
+
+    input:focus, select:focus {
+      border-color: #004aad;
+      outline: none;
+    }
+
+    .btn {
+      background: #004aad;
+      color: white;
+      border: none;
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background: #003580;
+    }
+
+    .note {
+      font-size: 13px;
+      color: #666;
+      text-align: center;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="withdraw-container">
+    <h2>Withdraw Funds</h2>
+    <form method="POST" action="">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="amount">Withdrawal Amount (USD)</label>
+        <input type="number" step="0.01" name="amount" id="amount" required />
+      </div>
+
+      <div class="form-group">
+        <label for="method">Withdrawal Method</label>
+        <select name="method" id="method" required>
+          <option value="">Select Method</option>
+          <option value="pyusd">PYUSD Wallet</option>
+          <option value="bank">Bank Transfer</option>
+          <option value="crypto">Crypto (USDT/TRC20)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="account">Destination Account / Wallet Address</label>
+        <input type="text" name="account" id="account" placeholder="Enter account number or wallet address" required />
+      </div>
+
+      <button type="submit" class="btn">Submit Withdrawal</button>
+    </form>
+
+    <p class="note">Withdrawals are processed within 24 hours. Make sure your details are correct.</p>
+  </div>
+
+</body>
+</html>

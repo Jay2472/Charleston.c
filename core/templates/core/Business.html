@@ -1,0 +1,80 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Business Loans - Charleston Credit Union</title>
+  <link rel="stylesheet" href="{% static 'core/style.css' %}">
+
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">Charleston Credit Union</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="loan.html">Loans</a>
+      <a href="business.html" class="active">Business</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <section class="business-hero">
+    <div class="business-hero-content">
+      <h1>Grow Your Business with Confidence</h1>
+      <p>Our flexible business loans help you expand, restock, or upgrade your business with ease.</p>
+      <a href="#apply" class="btn-primary">Apply Now</a>
+    </div>
+  </section>
+
+  <section class="business-info">
+    <h2>Why Choose Our Business Loans?</h2>
+    <div class="info-grid">
+      <div>
+        <h3>Low Interest Rates</h3>
+        <p>Enjoy competitive rates designed to help your business grow sustainably.</p>
+      </div>
+      <div>
+        <h3>Flexible Repayment</h3>
+        <p>Choose repayment terms that suit your business cash flow and season.</p>
+      </div>
+      <div>
+        <h3>Fast Approval</h3>
+        <p>Quick and transparent loan process so you can get funds when you need them most.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="business-image-text">
+    <div class="biz-text">
+      <h2>Powering Small and Medium Businesses</h2>
+      <p>Whether you’re expanding your store, purchasing equipment, or funding new projects, Charleston Credit Union supports your dreams with reliable financial solutions.</p>
+      <ul>
+        <li>✔ Up to $250,000 loan amount</li>
+        <li>✔ 12–60 month repayment terms</li>
+        <li>✔ Dedicated business advisor</li>
+      </ul>
+    </div>
+    <div class="biz-img">
+      <img src="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Business meeting">
+    </div>
+  </section>
+
+  <section class="business-apply" id="apply">
+    <h2>Ready to Expand Your Business?</h2>
+    <p>Fill the quick form below and our loan team will contact you within 24 hours.</p>
+    <form class="apply-form">
+      <input type="text" placeholder="Full Name" required>
+      <input type="email" placeholder="Email Address" required>
+      <input type="number" placeholder="Loan Amount" required>
+      <textarea placeholder="Business Purpose" rows="4"></textarea>
+      <button type="submit">Submit Application</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>© 2025 Charleston Credit Union. All rights reserved.</p>
+  </footer>
+</body>
+</html>

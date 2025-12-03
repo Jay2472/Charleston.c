@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Deposit Status</title>
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #f4f6fb; padding: 2rem; }
+    h1 { color: #0c1e46; }
+    table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; }
+    th, td { padding: 1rem; border-bottom: 1px solid #eee; text-align: left; }
+    .pending { color: orange; font-weight: bold; }
+    .successful { color: green; font-weight: bold; }
+    .failed { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Your Deposit Status</h1>
+  <table>
+    <tr>
+      <th>Amount (USD)</th>
+      <th>Status</th>
+      <th>Date</th>
+    </tr>
+    {% for deposit in deposits %}
+    <tr>
+      <td>${{ deposit.amount }}</td>
+      <td class="{{ deposit.status }}">{{ deposit.status|title }}</td>
+      <td>{{ deposit.date }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="3">No deposits yet.</td></tr>
+    {% endfor %}
+  </table>
+  <a href="{% url 'dashboard' %}">← Back to Dashboard</a>
+</body>
+</html>

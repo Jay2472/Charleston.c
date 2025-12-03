@@ -1,0 +1,213 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loan Status - Charleston Credit Union</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f3f6fa;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .status-container {
+      width: 100%;
+      max-width: 600px;
+      padding: 20px;
+    }
+
+    .status-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      padding: 30px 25px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .status-card h1 {
+      text-align: center;
+      margin-bottom: 8px;
+      font-size: 26px;
+      color: #1b3a57;
+    }
+
+    .status-card .sub {
+      text-align: center;
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      background: #e9ecef;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 25px;
+      height: 10px;
+    }
+
+    .progress {
+      height: 10px;
+      transition: width 0.4s ease;
+    }
+
+    .progress.approved {
+      width: 100%;
+      background: linear-gradient(90deg, #28a745, #34d058);
+    }
+
+    .progress.pending {
+      width: 50%;
+      background: linear-gradient(90deg, #f0ad4e, #ffce54);
+    }
+
+    .progress.rejected {
+      width: 100%;
+      background: linear-gradient(90deg, #dc3545, #ff6b6b);
+    }
+
+    .loan-info {
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+      padding: 15px 0;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      margin: 12px 0;
+      font-size: 15px;
+      color: #333;
+    }
+
+    .badge {
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: white;
+      text-transform: capitalize;
+    }
+
+    .badge.pending {
+      background: #f0ad4e;
+    }
+    .badge.approved {
+      background: #28a745;
+    }
+    .badge.rejected {
+      background: #dc3545;
+    }
+
+    .success-box,
+    .pending-box,
+    .rejected-box {
+      text-align: center;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 25px;
+      color: white;
+    }
+
+    .success-box {
+      background: linear-gradient(135deg, #28a745, #34d058);
+    }
+    .pending-box {
+      background: linear-gradient(135deg, #f0ad4e, #ffce54);
+    }
+    .rejected-box {
+      background: linear-gradient(135deg, #dc3545, #ff6b6b);
+    }
+
+    .btn-back {
+      display: inline-block;
+      margin-top: 30px;
+      text-decoration: none;
+      background: #1b3a57;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    .btn-back:hover {
+      background: #163249;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="status-container">
+    <div class="status-card">
+      <h1>Loan Status</h1>
+      <p class="sub">Your loan details and current progress</p>
+
+      <div class="progress-bar">
+        <div class="progress {% if loan.status == 'Approved' %}approved{% elif loan.status == 'Pending' %}pending{% else %}rejected{% endif %}"></div>
+      </div>
+
+      <div class="loan-info">
+        <div class="info-row">
+          <span>Full Name:</span>
+          <strong>{{ loan.full_name }}</strong>
+        </div>
+
+        <div class="info-row">
+          <span>Loan Amount:</span>
+          <strong>${{ loan.loan_amount }}</strong>
+        </div>
+
+        <div class="info-row">
+          <span>Upfront Fee (20%):</span>
+          <strong>${{ fee.fee_amount }}</strong>
+        </div>
+
+        <div class="info-row">
+          <span>Status:</span>
+          <span class="badge {{ loan.status|lower }}">{{ loan.status }}</span>
+        </div>
+
+        <div class="info-row">
+          <span>Transaction ID:</span>
+          <strong>{{ fee.transaction_id|default:"—" }}</strong>
+        </div>
+      </div>
+
+      {% if loan.status == 'Approved' %}
+      <div class="success-box">
+        <h2>🎉 Your Loan Has Been Approved!</h2>
+        <p>Funds will be deposited to your linked bank once verification is complete.</p>
+      </div>
+      {% elif loan.status == 'Pending' %}
+      <div class="pending-box">
+        <h2>⏳ Your Loan Is Pending Review</h2>
+        <p>Please allow our team time to verify your documents and payment.</p>
+      </div>
+      {% elif loan.status == 'Rejected' %}
+      <div class="rejected-box">
+        <h2>❌ Loan Application Rejected</h2>
+        <p>Unfortunately, your loan could not be approved at this time.</p>
+      </div>
+      {% endif %}
+
+      <div style="text-align:center;">
+        <a href="{% url 'dashboard' %}" class="btn-back">← Back to Dashboard</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
